@@ -50,6 +50,10 @@ export default class Admin {
     return Admin.#instance;
   }
 
+  static createInstance(params) {
+    Admin.#instance = new Admin(params);
+  }
+
   static isAdminConnected() {
     return Admin.#instance != null;
   }
@@ -93,7 +97,7 @@ export default class Admin {
       });
     return this.questions;
   }
-  // params = question {niveau, language, question, options}
+  // params = question {niveau, language, question, responses}
   async ajouterQuestion(params) {
     await addDoc(collection(db, "Questions"), params)
       .then(() => {
@@ -118,7 +122,7 @@ export default class Admin {
   }
   // params = {questionId, ...}
   async supprimerQuestion(params) {
-    await deleteDoc(doc(db, "Questions", params.questionId))
+    await deleteDoc(doc(db, "Questions", params))
       .then(() => {
         console.log("Question supprimée");
       })
