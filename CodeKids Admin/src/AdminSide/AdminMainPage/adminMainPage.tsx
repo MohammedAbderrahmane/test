@@ -1,19 +1,20 @@
 import "./adminMainPage.css";
-import AuthPage from "../AuthPage/authPage";
+
+import { Navigate, Link } from "react-router-dom";
+
 import Admin from "../../Backend/Admin.js";
+
+import AuthPage from "../AuthPage/authPage";
 import QuestionPage from "../QuestionsPage/questionsPage";
 
 // params = {setCurrentPage}
-export default function AdminMainPage(params) {
+export default function AdminMainPage() {
+  // Disconnecting
   function handleLogout() {
     Admin.deConnecter();
-    params.setCurrentPage(<AuthPage setCurrentPage={params.setCurrentPage} />);
+    localStorage.clear();
   }
-  function goToQuestionList() {
-    params.setCurrentPage(
-      <QuestionPage setCurrentPage={params.setCurrentPage} />,
-    );
-  }
+  // open Question list
 
   return (
     <>
@@ -22,38 +23,11 @@ export default function AdminMainPage(params) {
       </header>
 
       <main>
-        <section className="comptes">
-          <h2>Gérer les comptes des utilisateurs</h2>
-          <ul>
-            <li>
-              <a href="">Liste des comptes</a>
-            </li>
-            <li>
-              <a href="">Ajouter un compte</a>
-            </li>
-            <li>
-              <a href="">Modifier un compte</a>
-            </li>
-            <li>
-              <a href="">Supprimer un compte</a>
-            </li>
-          </ul>
-        </section>
-
         <section className="questions">
           <h2>Voir la liste de toutes les questions</h2>
           <ul>
             <li>
-              <a onClick={() => goToQuestionList()}>Liste des questions</a>
-            </li>
-            <li>
-              <a href="">Ajouter une question</a>
-            </li>
-            <li>
-              <a href="">Modifier une question</a>
-            </li>
-            <li>
-              <a href="">Supprimer une question</a>
+              <Link to="/questions">La liste des questions</Link>
             </li>
           </ul>
         </section>
@@ -63,15 +37,6 @@ export default function AdminMainPage(params) {
           <ul>
             <li>
               <a href="">Liste des avis</a>
-            </li>
-            <li>
-              <a href="">Ajouter un avis</a>
-            </li>
-            <li>
-              <a href="">Modifier un avis</a>
-            </li>
-            <li>
-              <a href="">Supprimer un avis</a>
             </li>
           </ul>
         </section>
