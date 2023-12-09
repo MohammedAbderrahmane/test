@@ -107,12 +107,12 @@ export default class Admin {
         console.log("Question non ajouté avec echeck!");
       });
   }
-  // params = rank , question {questionId,newNiveau, newLanguage, newQuestion, newReponses}
+  // params = { question , questionID }
   async modifierQuestion(params) {
-    this.questions.filter((index) => {
-      index != params.rank;
-    });
-    await updateDoc(doc(db, "Questions", params.questionId), params)
+    console.log(params);
+    const docRef = doc(db, "Questions", params.questionID);
+    //const question = params.question.filter();
+    await updateDoc(docRef, params.question)
       .then(() => {
         console.log("Question modifiée");
       })
