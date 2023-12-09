@@ -15,37 +15,75 @@ export default function QuestionPage() {
 
   console.log(questions);
 
-  // One Question
+  // One Question | params = {question, key}
   function QuestionFragment(params) {
-    const indexOfQuestion = params.key;
     const [canEdit, setCanEdit] = useState(false);
-    //const [modifiedQuestion, setModifiedQuestion] = useState(params.question);
+    const [modifiedQuestion, setModifiedQuestion] = useState(params.question);
+    const [modifiedResponses, setModifiedResponses] = useState(
+      modifiedQuestion.responses,
+    );
 
     // the 4 responses : <ResponsesFragment>
-    const ResponsesFragment = (params) => {
-      // a response from the 4 responses :  <OneResponseFragment>
+    const ResponsesFragment = () => {
+      const initialCorrect = modifiedResponses.findIndex(
+        (response) => response.isCorrect,
+      );
+
+      const [correct, setCorrect] = useState(initialCorrect + "");
+      /* a response from the 4 responses : <OneResponseFragment>
+                params = {index,response}
+      */
       const OneResponseFragment = (params) => {
-        let isCorrect = false;
-        params.response.isCorrect != null && params.response.isCorrect == true
-          ? (isCorrect = true)
-          : (isCorrect = false);
+        //
+        // TOFIX
+        // verify response.isCorrect exist (make sure that only one is correct)
+        const handleCheckBoxChange = (index) => {
+          //console.log("in:" + correct + " == ?" + index);
+          setCorrect(index + "");
+          setModifiedResponses(
+            modifiedResponses.map((response, i) => ({
+              ...response,
+              isCorrect: i == parseInt(index),
+            })),
+          );
+        };
+        /*if (
+          canEdit &&
+          params.response.isCorrect != null &&
+          params.response.isCorrect
+        )
+          setCorrect(String(params.index));*/
+
         return (
-          <div id={params.key}>
-            <input type="checkbox" checked={isCorrect} disabled={!canEdit} />
+          <div>
+            <input
+              type="checkbox"
+              checked={correct == String(params.index)}
+              disabled={!canEdit}
+              onChange={(e) => {
+                console.log("out:" + correct + " == ?" + params.index);
+                //console.log(modifiedResponses);
+                handleCheckBoxChange(params.index);
+              }}
+            />
             <input
               disabled={!canEdit}
               defaultValue={params.response.response}
+              onChange={(e) => {
+                const tmpArray = modifiedResponses;
+                tmpArray[params.index].response = e.target.value;
+                setModifiedResponses(tmpArray);
+              }}
             />
             <br />
           </div>
         );
       };
 
-      return params.responses.map((response, index) => {
-        return <OneResponseFragment key={index} response={response} />;
+      return modifiedResponses.map((response, index) => {
+        return <OneResponseFragment response={response} index={index} />;
       });
     };
-
     // modier button pressed
     const hadleModificationButton = () => {
       setCanEdit(!canEdit);
@@ -57,10 +95,37 @@ export default function QuestionPage() {
         "Are you sure you want to delete this question?\n" + params.question,
       );
       if (!userDecision) return;
-      const tmpArray = questions.filter();
+      const tmpArray = questions.filter((item) => item != params);
       console.log(params);
-
+      setQuestions(tmpArray);
       Admin.getInstance().supprimerQuestion(params.questionID);
+    };
+    // engesterement
+    const handleEngesterement = (params) => {
+      // putting modifiedQuestion + modifiedResponses in one array
+      const newModifiedResponses = modifiedResponses.map((response) => {
+        return {
+          isCorrect: response.isCorrect,
+          response: response.response,
+        };
+      });
+      const newModifiedQuestion = {
+        question: modifiedQuestion.question,
+        language: modifiedQuestion.language,
+        niveau: modifiedQuestion.niveau,
+        responses: newModifiedResponses,
+      };
+      console.log(newModifiedQuestion);
+      const userDecision = window.confirm(
+        "Are you sure you want to modify this question?\n" + params.question,
+      );
+      if (!userDecision) return;
+
+      Admin.getInstance().modifierQuestion({
+        questionID: params.questionID,
+        question: newModifiedQuestion,
+      });
+      setCanEdit(!canEdit);
     };
 
     return (
@@ -71,17 +136,39 @@ export default function QuestionPage() {
         >
           <input
             disabled={!canEdit}
-            defaultValue={params.question.language}
+            defaultValue={modifiedQuestion.language}
             onChange={(e) => {
-              params.question.language = e.target.value;
+              setModifiedQuestion({
+                ...modifiedQuestion,
+                language: e.target.value,
+              });
             }}
           />
           <br />
-          <input disabled={!canEdit} defaultValue={params.question.niveau} />
+          <input
+            disabled={!canEdit}
+            defaultValue={modifiedQuestion.niveau}
+            onChange={(e) => {
+              setModifiedQuestion({
+                ...modifiedQuestion,
+                niveau: e.target.value,
+              });
+            }}
+          />
           <br />
-          <input disabled={!canEdit} defaultValue={params.question.question} />
+          <input
+            disabled={!canEdit}
+            defaultValue={modifiedQuestion.question}
+            onChange={(e) => {
+              setModifiedQuestion({
+                ...modifiedQuestion,
+                question: e.target.value,
+              });
+            }}
+          />
           <br />
-          <ResponsesFragment responses={params.question.responses} />
+          <ResponsesFragment />
+
           <button
             onClick={() => {
               hadleModificationButton();
@@ -89,11 +176,21 @@ export default function QuestionPage() {
           >
             {!canEdit ? "Modifier la Question" : "Annuler la Modification"}
           </button>
-          {canEdit && <button>Engester la modification</button>}
+          {canEdit && (
+            <button
+              onClick={() => {
+                console.log(modifiedQuestion);
+                handleEngesterement(modifiedQuestion);
+              }}
+            >
+              Engester la modification
+            </button>
+          )}
           <button
+            disabled={canEdit}
             onClick={() => {
-              console.log(params.question.questionID);
-              handleSupprimerQuestion(params.question);
+              console.log(modifiedQuestion.questionID);
+              handleSupprimerQuestion(modifiedQuestion);
             }}
           >
             Supprimer Question
@@ -102,12 +199,14 @@ export default function QuestionPage() {
       </>
     );
   }
+
   return (
     <>
       <h1>Ajouter nouvel question :</h1>
       <NewQuestionFragment />
       <h1>Modifier ou supprimer les questions :</h1>
       {questions.map((question, index) => {
+        //console.log(question + " aqsdqs " + index);
         return <QuestionFragment question={question} key={index} />;
       })}
     </>
@@ -144,7 +243,6 @@ function NewQuestionFragment() {
         isCorrect: i == parseInt(index),
       })),
     );
-    console.log(responses);
   };
 
   const handleResponseChange = (index, value) => {
