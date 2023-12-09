@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Bootstrap Admin Template : Two Page</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/css/adminMainPage.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="adjust-nav">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">CodeKids</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">See Website</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li class="text-center user-image-back">
+                        <img src="assets/img/ThomasShelby.jpg" class="img-responsive" />
+                    </li>
+                    <li>
+                        <a href="#sectionDash" onclick="ScrollNav(this)"><i class="fa fa-desktop "></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#sectionComptes" onclick="ScrollNav(this)">
+                            <i class="fa fa-edit "></i>Comptes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#sectionQuestions" onclick="ScrollNav(this)">
+                            <i class="fa fa-table "></i>Questions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#sectionAvis" onclick="ScrollNav(this)">
+                            <i class="fa fa-edit "></i>Avis</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="col-md-12">
+                <h2>Admin Dashboard</h2>
+            </div>
+            <section class="col-md-12" id="sectionDash">
+                <div class="col-md-5 col-sm-5 col-xs-6">
+                    <h5>Espace dans la BDD </h5>
+                    <div class="panel panel-primary text-center no-boder bg-color-blue">
+                        <div class="panel-body">
+                            <i class="fa fa-bar-chart-o fa-5x"></i>
+                            <h3>120 GB </h3>
+                        </div>
+                        <div class="panel-footer back-footer-blue">
+                            Disk Space Available
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">To-Do List</h5>
+                            <div class="input-group mb-3">
+                                <input type="text" id="newTask" class="form-control" placeholder="nouvelle tache">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" onclick="addTask()">Ajouter une Tache</button>
+                                </div>
+                            </div>
+                            <ul id="taskList" class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-12 mt-3 pt-3 mb-3" id="sectionComptes">
+                <h2>Gérer les comptes des utilisateurs</h2>
+                <ul>
+                    <li><a href="#" class="text-decoration-none">Ajouter un compte</a></li>
+                    <li><a href="#" class="text-decoration-none">Modifier un compte</a></li>
+                    <li><a href="#" class="text-decoration-none">Supprimer un compte</a></li>
+                </ul>
+                <div class="row">
+                    <div class="col-md-5 col-sm-5 col-xs-6">
+                        <h5>Les comptes enregistres</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="success">
+                                        <td>1</td>
+                                        <td>Amine</td>
+                                        <td>Bouchaour</td>
+                                        <td>@aminho</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>1</td>
+                                        <td>Amine</td>
+                                        <td>Bouchaour</td>
+                                        <td>@aminho</td>
+                                    </tr>
+                                    <tr class="warning">
+                                        <td>1</td>
+                                        <td>Amine</td>
+                                        <td>Bouchaour</td>
+                                        <td>@aminho</td>
+                                    </tr>
+                                    <tr class="danger">
+                                        <td>1</td>
+                                        <td>Amine</td>
+                                        <td>Bouchaour</td>
+                                        <td>@aminho</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-12 mt-3 pt-3 mb-3" id="sectionQuestions">
+                <h2>Voir la liste de toutes les questions</h2>
+                <ul>
+                    <li><a href="#" class="text-decoration-none">Ajouter une question</a></li>
+                    <li><a href="#" class="text-decoration-none">Modifier une question</a></li>
+                    <li><a href="#" class="text-decoration-none">Supprimer une question</a></li>
+                </ul>
+                <div class="col-md-4">
+                    <h5>Questions Disponibles</h5>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            language (java || python || c#)
+                        </div>
+                        <div class="panel-body">
+                            <p>Questions</p>
+                        </div>
+                        <div class="panel-footer">
+                            niveau (easy|| medium || hard )
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Questions Disponibles</h5>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            language (java || python || c#)
+                        </div>
+                        <div class="panel-body">
+                            <p>Questions</p>
+                        </div>
+                        <div class="panel-footer">
+                            niveau (easy|| medium || hard )
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Questions Disponibles</h5>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            language (java || python || c#)
+                        </div>
+                        <div class="panel-body">
+                            <p>Questions</p>
+                        </div>
+                        <div class="panel-footer">
+                            niveau (easy|| medium || hard )
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-12" id="sectionAvis">
+                <h2>Gérer les avis</h2>
+                <ul>
+                    <li><a href="#" class="text-decoration-none">Ajouter un avis</a></li>
+                    <li><a href="#" class="text-decoration-none">Modifier un avis</a></li>
+                    <li><a href="#" class="text-decoration-none">Supprimer un avis</a></li>
+                </ul>
+                <div class="col-md-12">
+                    <h5>Avis Disponibles</h5>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                        class="collapsed">Sujet d'avis</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+                                <div class="panel-body">
+                                    thya real
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                        Sujet d'avis</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse in" style="height: auto;">
+                                <div class="panel-body">
+                                    Thya real
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                                        class="collapsed">Sujet d'avis</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    Thya real
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <script src="assets/js/jquery-1.10.2.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.metisMenu.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script>
+
+            function addTask() {
+                var newTaskInput = document.getElementById("newTask");
+                var taskList = document.getElementById("taskList");
+
+                if (newTaskInput.value.trim() !== "") {
+                    var taskItem = document.createElement("li");
+                    taskItem.innerHTML = `<input type="checkbox" onchange="toggleTask(this)"> ${newTaskInput.value}`;
+                    taskList.appendChild(taskItem);
+                    newTaskInput.value = "";
+                }
+            }
+
+            function toggleTask(checkbox) {
+                if (checkbox.checked) {
+                    checkbox.parentNode.style.textDecoration = "line-through";
+                } else {
+                    checkbox.parentNode.style.textDecoration = "none";
+                }
+            }
+
+            function ScrollNav(link) {
+                var sectionIds = ["sectionDash", "sectionComptes", "sectionQuestions", "sectionAvis"];
+
+                for (var i = 0; i < sectionIds.length; i++) {
+                    document.getElementById(sectionIds[i]).style.display = 'none';
+                }
+
+
+                var selectedSectionId = link.getAttribute("href").substring(1);
+                document.getElementById(selectedSectionId).style.display = 'block';
+            }
+
+            var navLinks = document.querySelectorAll('.nav-link');
+            for (var i = 0; i < navLinks.length; i++) {
+                navLinks[i].addEventListener('click', function (event) {
+                    event.preventDefault();
+                    ScrollNav(this);
+                });
+            }
+
+            ScrollNav(document.querySelector('.nav-link[href="#sectionDash"]'));
+        </script>
+</body>
+</html>
