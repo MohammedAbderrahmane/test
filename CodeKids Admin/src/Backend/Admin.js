@@ -15,9 +15,8 @@ export default class Admin {
   docRef;
   questions = [];
 
-  constructor(params) {
+  constructor() {
     if (Admin.#instance) throw new Error("New instance cannot be created!");
-    this.docRef = params.ref;
   }
 
   // params = {email, password}
@@ -30,13 +29,15 @@ export default class Admin {
               docSnapShot.data().email == params.email &&
               docSnapShot.data().password == params.password
             ) {
-              Admin.#instance = new Admin(docSnapShot.ref);
+              Admin.#instance = new Admin();
               console.log("login success");
             } else console.log("login filled");
           });
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        console.log("login filled");
+      });
   }
 
   static deConnecter() {
@@ -50,8 +51,8 @@ export default class Admin {
     return Admin.#instance;
   }
 
-  static createInstance(params) {
-    Admin.#instance = new Admin(params);
+  static createInstance() {
+    Admin.#instance = new Admin();
   }
 
   static isAdminConnected() {

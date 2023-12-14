@@ -19,6 +19,7 @@ export default function App() {
   //localStorage.clear();
   if (isSessionActive) {
     // assign the admin instance from session
+    //Admin.createInstance();
     <Navigate to="/home" />;
   }
 
