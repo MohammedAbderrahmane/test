@@ -218,12 +218,7 @@ function NewQuestionFragment() {
     language: "",
     niveau: "",
     question: "",
-    /* responses: [
-        { 
-          isCorrect: false,
-          response: "" 
-        }
-      ],  */
+    /* responses: [{isCorrect: false,response: "" }],  */
   });
   // on peut merger responses dans question (plus de travail)
   const [responses, setResponses] = useState([
@@ -262,6 +257,19 @@ function NewQuestionFragment() {
     console.log(newQuestion);
 
     Admin.getInstance().ajouterQuestion(newQuestion);
+    const AfterEmptyQuestion = {
+      language: "",
+      niveau: "",
+      question: "",
+    };
+    const AfterEmptyResponses = responses.map(() => {
+      return {
+        isCorrect: false,
+        response: "",
+      };
+    });
+    setQuestion(AfterEmptyQuestion);
+    setResponses(AfterEmptyResponses);
   };
 
   // NOT USEFULL FOR NOW (can be used to shorten code)
@@ -281,6 +289,7 @@ function NewQuestionFragment() {
       <input
         type="text"
         onChange={(e) => setQuestion({ ...question, question: e.target.value })}
+        style={{ width: "${text.lenght * 10}px" }}
       />
       <br />
       <select
